@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  algo_container:
+    build:
+      context: ./ml
+      dockerfile: Dockerfile_ml
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./ml:/app
+    restart: always
+
+  ui_container:
+    build:
+      context: ./web
+      dockerfile: Dockerfile_web
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./web:/app
+    depends_on:
+      - algo_container
+    restart: always
