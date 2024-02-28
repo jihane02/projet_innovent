@@ -11,7 +11,7 @@ app = Flask(__name__)
 def train_model():
 
     print (1)
-    # Check if the post request has the file part
+   
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
 
@@ -20,21 +20,21 @@ def train_model():
         return jsonify({"error": "No selected file"}), 400
 
     try:
-        # Read the file into a pandas DataFrame
+        
         print (2)
         df = pd.read_csv(file)
-        # Assuming the last column is the target variable
+       
         X = df.iloc[:, :-1].values
         y = df.iloc[:, -1].values
 
-        # Splitting the dataset into the Training set and Test set
+        
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
-        # Fitting Decision Tree to the Training set
+        
         classifier = DecisionTreeClassifier(random_state=0)
         classifier.fit(X_train, y_train)
 
-        # Saving the model
+        
         joblib.dump(classifier, "decision_tree_model.pkl")
 
         return jsonify({"message": "Model trained successfully"})

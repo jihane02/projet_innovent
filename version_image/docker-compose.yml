@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  algo_container:
+    image: ghcr.io/jihane02/projet_innovent_algo:latest  
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./ml:/app
+    restart: always
+
+  ui_container:
+    image: ghcr.io/jihane02/projet_innovent_ui:latest   
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./web:/app
+    depends_on:
+      - algo_container
+    restart: always
